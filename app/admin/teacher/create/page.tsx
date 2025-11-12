@@ -1,14 +1,17 @@
 import Breadcrumbs from "@/app/ui/teacher/breadcrumbs"
 import { Metadata } from "next"
 import { fetchTeacher } from "@/app/lib/data"
-// import CreateForm from "@/app/ui/teacher/create-form"
+import CreateTeacherForm from "@/app/ui/teacher/create-form"
 
 export const metadata: Metadata = {
     title: "Create Teacher"
 }
 
+// todo
+
 export default async function Page() {
-    // const teacher = await fetchTeacher()
+    const teacher = await fetchTeacher()
+    console.log(teacher)
     
     return (
         <>
@@ -24,7 +27,9 @@ export default async function Page() {
                 ]}
             />
             {/* for the data input */}
-            {/* <CreateForm customers={customers} /> */}
+            <CreateTeacherForm 
+            // teachers={teacher} 
+            />
             </main>
         </>
     )
