@@ -3,25 +3,25 @@
 import postgres from "postgres";
 import { Teacher, TeacherField } from "./definitions";
 
-const sql = postgres(process.env.DATABASE_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function fetchCardData() {
     try {
         const teachersCountPromise = sql`SELECT COUNT(*) FROM teachers`
-        const classesCountPromise = sql`SELECT COUNT(*) FROM classes`
+        const gradelevelCountPromise = sql`SELECT COUNT(*) FROM gradelevels`
         
 
         const data = await Promise.all([
             teachersCountPromise,
-            classesCountPromise
+            gradelevelCountPromise
         ]);      // TODO add the count for students
 
         const numberofTeachers = Number(data[0][0].count ?? "0")
-        const numberofClasses = Number(data[0][0].count ?? "0")
+        const numberofGradelevels = Number(data[1][0].count ?? "0")
 
     return {
         numberofTeachers,
-        numberofClasses
+        numberofGradelevels
     }
 
     } catch (error) {
@@ -35,10 +35,13 @@ export async function fetchTeacher() {
     try {
         const teachers = await sql<TeacherField[]>`
         SELECT
-            id,
-            name
+            teacherid,
+            firstname,
+            middlename,
+            lastname,
+            specialization
         FROM teachers
-        ORDER BY name ASC
+        ORDER BY firstname ASC
         `;
 
         return teachers;
@@ -58,14 +61,20 @@ export async function fetchFilteredTeachers(
     try {
         const teachers = await sql<Teacher[]>`
         SELECT 
-            teachers.id,
-            teachers.name,
-            teachers.email
+            teachers.teacherid,
+            teachers.firstname,
+            teachers.middlename,
+            teachers.lastname,
+            teachers.email,
+            teachers.specialization
         FROM teachers
         WHERE 
-            teachers.name ILIKE ${`%${query}%`} OR
-            teachers.email ILIKE ${`%${query}%`}
-        ORDER BY teachers.name DESC
+            teachers.firstname ILIKE ${`%${query}%`} OR
+            teachers.middlename ILIKE ${`%${query}%`} OR
+            teachers.lastname ILIKE ${`%${query}%`} OR
+            teachers.email ILIKE ${`%${query}%`} OR
+            teachers.specialization ILIKE ${`%${query}%`}
+        ORDER BY teachers.firstname DESC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
         `;
 
