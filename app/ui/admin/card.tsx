@@ -22,8 +22,8 @@ export default async function CardWrapper() {
   // Cards displays the data
 
   const {
-    numberofClasses,
     numberofTeachers,
+    numberofGradelevels,
     // totalPaidInvoices,
     // totalPendingInvoices,
   } = await fetchCardData();
@@ -34,7 +34,7 @@ export default async function CardWrapper() {
 
       {/* <Card title="Collected" value={totalPaidInvoices} type="collected" /> */}
       {/* <Card title="Pending" value={totalPendingInvoices} type="pending" /> */}
-      <Card title="Total Classes" value={numberofClasses} type="classes" />
+      <Card title="Total Classes" value={numberofGradelevels} type="classes" />
       <Card
         title="Total Teachers"
         value={numberofTeachers}
