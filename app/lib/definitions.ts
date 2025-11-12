@@ -1,11 +1,17 @@
 
 export type Teacher = {
-    id: string;
-    name: string;
-    email: string
+    teacherid: string;
+    firstname: string;
+    middlename: string;
+    lastname: string;
+    email: string;
+    specialization: string;
 }
 
 export type TeacherField = {
-    id: string;
-    name: string;
+    teacherid: string;
+    firstname: string;
+    middlename: string;
+    lastname: string;
+    specialization: string;
 }
