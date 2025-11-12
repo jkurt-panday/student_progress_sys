@@ -1,4 +1,4 @@
-import Image from "next/image"
+// import Image from "next/image"
 import { fetchFilteredTeachers } from "@/app/lib/data";
 
 export default async function TeacherTable({
@@ -18,7 +18,7 @@ export default async function TeacherTable({
                             {
                                 teachers?.map((teacher) => (
                                     <div
-                                        key={teacher.id}
+                                        key={teacher.teacherid}
                                         className="mb-2 w-full rounded-md bg-white p-4"
                                     >
                                         <div className="flex items-center justify-between border-b pb-4">
@@ -31,9 +31,10 @@ export default async function TeacherTable({
                                                 height={28}
                                                 alt={`${teacher.name}'s profile picture`}
                                             /> */}
-                                            <p>{teacher.name}</p>
+                                            <p>{teacher.firstname} {teacher.middlename} {teacher.lastname}</p>
                                             </div>
                                             <p className="text-sm text-gray-500">{teacher.email}</p>
+                                            <p className="text-sm text-gray-500">{teacher.specialization}</p>
                                         </div>
                                         {/* <InvoiceStatus status={teacher.status} /> */}
                                         </div>
@@ -58,20 +59,20 @@ export default async function TeacherTable({
                         <table className="hidden min-w-full text-gray-900 md:table">
                             <thead className="rounded-lg text-left text-sm font-normal">
                             <tr>
-                                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                                Name
+                                <th scope="col" className="px-4 py-5 font-bold sm:pl-6">
+                                First Name
                                 </th>
-                                <th scope="col" className="px-3 py-5 font-medium">
+                                <th scope="col" className="px-3 py-5 font-bold">
+                                Middle Name
+                                </th>
+                                <th scope="col" className="px-3 py-5 font-bold">
+                                Last Name
+                                </th>
+                                <th scope="col" className="px-3 py-5 font-bold">
                                 Email
                                 </th>
-                                <th scope="col" className="px-3 py-5 font-medium">
-                                Hello
-                                </th>
-                                <th scope="col" className="px-3 py-5 font-medium">
-                                Date
-                                </th>
-                                <th scope="col" className="px-3 py-5 font-medium">
-                                Status
+                                <th scope="col" className="px-3 py-5 font-bold">
+                                Specialization
                                 </th>
                                 <th scope="col" className="relative py-3 pl-6 pr-3">
                                 <span className="sr-only">Edit</span>
@@ -81,7 +82,7 @@ export default async function TeacherTable({
                             <tbody className="bg-white">
                             {teachers?.map((teacher) => (
                                 <tr
-                                key={teacher.id}
+                                key={teacher.teacherid}
                                 className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                                 >
                                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
@@ -93,20 +94,20 @@ export default async function TeacherTable({
                                         height={28}
                                         alt={`${teacher.name}'s profile picture`}
                                     /> */}
-                                    <p>{teacher.name}</p>
+                                    <p>{teacher.firstname}</p>
                                     </div>
+                                </td>
+                                <td className="whitespace-nowrap px-3 py-3">
+                                    {teacher.middlename}
+                                </td>
+                                <td className="whitespace-nowrap px-3 py-3">
+                                    {teacher.lastname}
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-3">
                                     {teacher.email}
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-3">
-                                    {/* {formatCurrency(teacher.amount)} */}
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-3">
-                                    {/* {formatDateToLocal(teacher.date)} */}
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-3">
-                                    {/* <InvoiceStatus status={teacher.status} /> */}
+                                    {teacher.specialization}
                                 </td>
                                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                     <div className="flex justify-end gap-3">
