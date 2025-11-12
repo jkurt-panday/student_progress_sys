@@ -5,7 +5,6 @@ import { PowerIcon } from "@heroicons/react/24/outline";
 // chapter 14, authentication, log out functionality
 // import { signOut } from '@/auth';
 
-// TODO change this into a responsive sidebar and navbar, use the one with student man sys
 export default function SideNav() {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2 border">
