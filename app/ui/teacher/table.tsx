@@ -1,5 +1,6 @@
 // import Image from "next/image"
 import { fetchFilteredTeachers } from "@/app/lib/data";
+import { UpdateTeacher } from "../button";
 
 export default async function TeacherTable({
     query, currentPage,
@@ -7,6 +8,8 @@ export default async function TeacherTable({
     query: string, currentPage: number
 }) {
     const teachers = await fetchFilteredTeachers(query, currentPage);
+
+    // TODO delete button and functionality
 
     return (
         <>
@@ -46,7 +49,7 @@ export default async function TeacherTable({
                                             {/* <p>{formatDateToLocal(teacher.date)}</p> */}
                                         </div>
                                         <div className="flex justify-end gap-2">
-                                            {/* <UpdateInvoice id={teacher.id} /> */}
+                                            <UpdateTeacher id={teacher.teacherid} />
                                             {/* <DeleteInvoice id={teacher.id} /> */}
                                         </div>
                                         </div>
@@ -111,7 +114,7 @@ export default async function TeacherTable({
                                 </td>
                                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                     <div className="flex justify-end gap-3">
-                                    {/* <UpdateInvoice id={teacher.id} /> */}
+                                    <UpdateTeacher id={teacher.teacherid} />
                                     {/* <DeleteInvoice id={teacher.id} /> */}
                                     </div>
                                 </td>
