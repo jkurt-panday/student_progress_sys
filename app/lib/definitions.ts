@@ -8,10 +8,12 @@ export type Teacher = {
     specialization: string;
 }
 
-export type TeacherField = {
+
+export type TeacherForm = {
     teacherid: string;
     firstname: string;
     middlename: string;
     lastname: string;
+    email: string;
     specialization: string;
 }
