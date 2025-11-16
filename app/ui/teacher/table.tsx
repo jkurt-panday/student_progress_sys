@@ -1,6 +1,6 @@
 // import Image from "next/image"
 import { fetchFilteredTeachers } from "@/app/lib/data";
-import { UpdateTeacher } from "../button";
+import { UpdateTeacher, DeleteTeacher } from "../button";
 
 export default async function TeacherTable({
     query, currentPage,
@@ -50,7 +50,7 @@ export default async function TeacherTable({
                                         </div>
                                         <div className="flex justify-end gap-2">
                                             <UpdateTeacher id={teacher.teacherid} />
-                                            {/* <DeleteInvoice id={teacher.id} /> */}
+                                            <DeleteTeacher id={teacher.teacherid} />
                                         </div>
                                         </div>
                                     </div>
@@ -115,7 +115,7 @@ export default async function TeacherTable({
                                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                     <div className="flex justify-end gap-3">
                                     <UpdateTeacher id={teacher.teacherid} />
-                                    {/* <DeleteInvoice id={teacher.id} /> */}
+                                    <DeleteTeacher id={teacher.teacherid} />
                                     </div>
                                 </td>
                                 </tr>
