@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import Link from 'next/link';
+import { PencilIcon } from '@heroicons/react/24/outline';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -16,4 +18,15 @@ export function Button({ children, className, ...rest }: ButtonProps) {
       {children}
     </button>
   );
+}
+
+export function UpdateTeacher({ id }: { id: string}) {
+  return (
+    <Link 
+      href={`/admin/teacher/${id}/edit`}
+      className='rounded-md border p-2 hover:bg-gray-100'
+    >
+      <PencilIcon className='w-5' />
+    </Link>
+  )
 }
