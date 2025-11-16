@@ -90,3 +90,16 @@ export async function updateTeacher(id: string, formData: FormData) {
     revalidatePath('/admin/teacher')
     redirect('/admin/teacher')
 }
+
+// ! deleting teacher
+
+export async function deleteTeacher(id: string) {
+    try {
+        await sql`DELETE FROM teachers WHERE teacherid = ${id}`;
+    } catch (error) {
+        console.log(error)
+        throw new Error('Failed to delete Teacher')
+    }
+
+    revalidatePath('/admin/teachers')
+}
