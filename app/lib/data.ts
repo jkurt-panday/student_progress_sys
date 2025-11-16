@@ -1,7 +1,7 @@
 // ! this is for fetching data, for data mutation refer to action.ts
 
 import postgres from "postgres";
-import { Teacher, TeacherField } from "./definitions";
+import { Teacher, TeacherForm } from "./definitions";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -33,12 +33,13 @@ export async function fetchCardData() {
 // ! fetching teachers without search
 export async function fetchTeacher() {
     try {
-        const teachers = await sql<TeacherField[]>`
+        const teachers = await sql<TeacherForm[]>`
         SELECT
             teacherid,
             firstname,
             middlename,
             lastname,
+            email,
             specialization
         FROM teachers
         ORDER BY firstname ASC
@@ -48,6 +49,27 @@ export async function fetchTeacher() {
     } catch (error) {
         console.error("Database Error:", error)
         throw new Error("Failed to fetch teachers")
+    }
+}
+
+// ! fetching teachers with id
+export async function fetchTeacherById(id: string) {
+    try {
+        const data = await sql<TeacherForm[]>`
+            SELECT 
+                teacherid,
+                firstname,
+                middlename,
+                lastname,
+                email,
+                specialization
+            FROM teachers
+            WHERE teacherid = ${id}`;
+
+        return data[0];
+    } catch (error) {
+        console.log(error)
+        throw new Error('Database Failure: faild to fetch teacher by ID')
     }
 }
 
