@@ -56,3 +56,37 @@ export async function createTeacher(formData: FormData) {
     console.log( {firstname, middlename, lastname, email, specialization} )
 
 }
+
+const UpdateTeacher = FormSchema.omit({ teacherid: true })
+
+export async function updateTeacher(id: string, formData: FormData) {
+    const { firstname, 
+            middlename, 
+            lastname, 
+            email, 
+            specialization 
+        } = UpdateTeacher.parse({
+            firstname: formData.get('firstname'),
+            middlename: formData.get('middlename'),
+            lastname: formData.get('lastname'),
+            email: formData.get('email'),
+            specialization: formData.get('specialization'),
+    })
+
+    try {
+        await sql`
+        UPDATE teachers
+        SET firstname = ${firstname},
+            middlename = ${middlename},
+            lastname = ${lastname},
+            email = ${email},
+            specialization = ${specialization}
+        WHERE teacherid = ${id}`;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Database failure: Failed to update teacher')
+    }
+
+    revalidatePath('/admin/teacher')
+    redirect('/admin/teacher')
+}
