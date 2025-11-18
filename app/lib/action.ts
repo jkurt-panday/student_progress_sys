@@ -103,3 +103,38 @@ export async function deleteTeacher(id: string) {
 
     revalidatePath('/admin/teachers')
 }
+
+
+const GradelevelSchema = z.object({
+    gradeid: z.string(),
+    gradename: z.string(),
+    assignedteacher: z.string().nullable(),
+})
+
+const CreateGradeLevel = GradelevelSchema.omit({ gradeid: true })
+
+// ! create grade level
+
+export async function createGradeLevel(formData: FormData) {
+    const {
+        gradename, assignedteacher
+    } = CreateGradeLevel.parse({
+        gradename: formData.get("gradename"),
+        assignedteacher: formData.get("assignedteacher")
+    })
+
+    try {
+        await sql`
+        INSERT INTO gradelevels (gradename, assignedteacher)
+        VALUES (${gradename}, ${assignedteacher})
+        `;
+    } catch (error) {
+        console.log(error)
+        throw new Error('Database Failure: Failed to Create Grade level')
+    }
+
+    revalidatePath('/admin/gradelevel')
+    redirect('/admin/gradelevel')
+
+    // TODO the edit button and the delete button for the gradelevel
+}
