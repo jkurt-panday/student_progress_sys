@@ -1,6 +1,6 @@
 import { fetchTeacherById } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/teacher/breadcrumbs"
-import Form from "@/app/ui/teacher/edit-form";
+import EditTeacherForm from "@/app/ui/teacher/edit-form";
 
 
 export default async function Page(
@@ -23,7 +23,7 @@ export default async function Page(
                 ]}
             />
             {/* editing form */}
-            <Form teachers={teacher}/>
+            <EditTeacherForm teachers={teacher}/>
         </main>
     )
 }
