@@ -17,3 +17,12 @@ export type TeacherForm = {
     email: string;
     specialization: string;
 }
+
+export type GradeLevel = {
+    gradeid: string;
+    gradename: string;
+    assignedteacher: string;
+    firstname: string;
+    middlename: string;
+    lastname: string;
+}
