@@ -1,7 +1,7 @@
 // ! this is for fetching data, for data mutation refer to action.ts
 
 import postgres from "postgres";
-import { Teacher, TeacherForm } from "./definitions";
+import { Teacher, TeacherForm, GradeLevel } from "./definitions";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -105,4 +105,33 @@ export async function fetchFilteredTeachers(
         console.error("Database Error:", error);
         throw new Error("Failed to fetch teachers (with quey)")
     }
+}
+
+
+// ! fetching gradelevels
+
+export async function fetchGradeLevels() {
+    try {
+        const gradelevels = await sql<GradeLevel[]>`
+            SELECT
+                gradelevels.gradeid,
+                gradelevels.gradename,
+                gradelevels.assignedteacher,
+                teachers.firstname,
+                teachers.middlename,
+                teachers.lastname
+            FROM gradelevels
+            JOIN teachers ON gradelevels.assignedteacher = teachers.teacherid
+            ORDER BY gradelevels.gradename ASC`;
+
+        return gradelevels;
+        
+    } catch (error) {
+        console.log(error)
+        throw new Error('Database Failure: Failed to fetch Grade Levels')
+    }
+}
+
+export async function fetchGradelevel() {
+    
 }
