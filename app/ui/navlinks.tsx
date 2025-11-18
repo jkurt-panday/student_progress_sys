@@ -17,6 +17,7 @@ const links = [
     name: "Teachers", href: "/admin/teacher", icon: UserCircleIcon,
   },
   { name: "Students", href: "/admin/students", icon: UserGroupIcon },
+  { name: "Grade Level", href: "/admin/gradelevel", icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {
