@@ -7,10 +7,9 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function fetchCardData() {
     try {
-        const teachersCountPromise = sql`SELECT COUNT(*) FROM teachers`
-        const gradelevelCountPromise = sql`SELECT COUNT(*) FROM gradelevels`
+        const teachersCountPromise = sql`SELECT COUNT(*) FROM teachers`;
+        const gradelevelCountPromise = sql`SELECT COUNT(*) FROM gradelevels`;
         
-
         const data = await Promise.all([
             teachersCountPromise,
             gradelevelCountPromise
@@ -132,6 +131,21 @@ export async function fetchGradeLevels() {
     }
 }
 
-export async function fetchGradelevel() {
-    
+export async function fetchGradelevelById(id: string) {
+    try {
+        const data = await sql<GradeLevel[]>`
+            SELECT
+                gradeid,
+                gradename,
+                assignedteacher
+            FROM gradelevels
+            WHERE gradeid = ${id}
+        `;
+
+        return data[0];
+
+    } catch (error) {
+        console.log(error)
+        throw new Error("Database Failure: failed to fetch gradelevel by id")
+    }
 }
