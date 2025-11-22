@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <main className="border">
+    <main>
       <h1 className="text-3xl font-bold ml-4 mb-4 bg-linear-to-r from-hex-blue via-[#398efd] to-[#ffdca8] bg-clip-text text-transparent">
         Dashboard
       </h1>
