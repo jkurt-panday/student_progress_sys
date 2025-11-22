@@ -1,7 +1,11 @@
 import { fetchTeacherById } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/teacher/breadcrumbs"
 import EditTeacherForm from "@/app/ui/teacher/edit-form";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "Edit Teacher"
+}
 
 export default async function Page(
     props: { params: Promise<{ id: string }>}
@@ -17,7 +21,7 @@ export default async function Page(
                 breadcrumbs={[
                     {label: 'Teacher', href: '/admin/teacher'},
                     {label: 'Edit Teacher',
-                        href: `admin/dashboard/teacher${id}/edit`,
+                        href: `admin/teacher/${id}/edit`,
                         active: true,
                     }
                 ]}
