@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { deleteTeacher } from '../lib/action';
+import { deleteGradeLevel, deleteTeacher } from '../lib/action';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -38,6 +38,33 @@ export function DeleteTeacher({ id }: { id: string }) {
   return (
     <>
       <form action={deleteTeacherWithId}>
+        <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
+          <span className="sr-only">Delete</span>
+          <TrashIcon className="w-5" />
+        </button>
+      </form>
+    </>
+  );
+}
+
+// ! for the gradelevel
+export function UpdateGradelevel({ id }: { id: string}) {
+  return (
+    <Link 
+      href={`/admin/gradelevel/${id}/edit`}
+      className='rounded-md border p-2 hover:bg-gray-100'
+    >
+      <PencilIcon className='w-5' />
+    </Link>
+  )
+}
+
+export function DeleteGradelevel({ id }: { id: string }) {
+  const deleteGradeLevelWithId = deleteGradeLevel.bind(null, id);
+
+  return (
+    <>
+      <form action={deleteGradeLevelWithId}>
         <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
           <span className="sr-only">Delete</span>
           <TrashIcon className="w-5" />
