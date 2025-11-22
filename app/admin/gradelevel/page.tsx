@@ -2,12 +2,12 @@
 import { GradeLevelTable } from "@/app/ui/teacher/table"
 import { CreateGradeLevel } from "@/app/ui/teacher/buttons"
 import { Metadata } from "next"
+import { Suspense } from "react"
+import { GradelevelSkeleton } from "@/app/ui/skeletons"
 
 export const metadata: Metadata = {
     title: "Grade Level"
 }
-
-// TODO skeletons for this page
 
 export default function Page() {
 
@@ -19,8 +19,10 @@ export default function Page() {
             <div className="mt-4 flex items-end justify-end gap-2 md:mt-8">
                 {/* <span className="hidden"><Search placeholder="Search grade level`" /></span> */}
                 <CreateGradeLevel></CreateGradeLevel>
-            </div>    
-            <GradeLevelTable></GradeLevelTable>
+            </div>
+            <Suspense fallback={<GradelevelSkeleton />}>
+                <GradeLevelTable></GradeLevelTable>
+            </Suspense>
         </>
     )
 }
