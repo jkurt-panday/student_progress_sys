@@ -1,4 +1,4 @@
-import { fetchGradeLevels, fetchTeacher } from "@/app/lib/data"
+import { fetchTeacher } from "@/app/lib/data"
 import { Metadata } from "next"
 import Breadcrumbs from "@/app/ui/teacher/breadcrumbs"
 import { CreateGradeLevelForm } from "@/app/ui/teacher/create-form"
