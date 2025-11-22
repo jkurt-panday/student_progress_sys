@@ -1,7 +1,7 @@
 'use client';
 
-import { Teacher } from "@/app/lib/definitions";
-import { updateTeacher } from "@/app/lib/action";
+import { GradeLevel, Teacher, TeacherForm } from "@/app/lib/definitions";
+import { updateGradeLevel, updateTeacher } from "@/app/lib/action";
 import Link from "next/link";
 import { Button } from "../button";
 
@@ -115,5 +115,80 @@ export default function EditTeacherForm(
                     <Button type="submit">Edit Teacher</Button>
                 </div>
         </form>
+    )
+}
+
+
+// ! grade level edit form
+
+export function EditGradeLevelForm(
+    { gradelevels, teachers }: { gradelevels: GradeLevel, teachers: TeacherForm[] }
+) {
+    const updateGradeLevelWithId = updateGradeLevel.bind(null, gradelevels.gradeid)
+    
+    return (
+        <>
+            <form action={updateGradeLevelWithId}>
+                    <div className="mb-4">
+                        <div className="rounded-md bg-gray-50 p-4 md:p-6">
+                        {/* Teacher Name */}
+                        <div className="mb-4">
+                        <label htmlFor="teacher" className="mb-2 block text-sm font-medium">
+                            Choose teacher to assign to class
+                        </label>
+                        <div className="relative">
+                            <select
+                            id="teacher"
+                            name="assignedteacher"
+                            className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                            defaultValue={gradelevels.assignedteacher}
+                            aria-describedby='customer-error'     // added in chapter 14
+                            >
+                            <option value="" disabled>
+                                Select a teacher
+                            </option>
+                            {teachers.map((teacher) => (
+                                <option key={teacher.teacherid} value={teacher.teacherid}>
+                                {teacher.firstname} {teacher.middlename} {teacher.lastname}
+                                </option>
+                            ))}
+                            </select>
+                        </div>
+                            {/* // ! where erros appear for accessbility */}
+                        
+                        </div>
+    
+                        <div className="mb-4">
+                            <label htmlFor="teacher" className="mb-2 block text-sm font-medium">
+                                Enter grade name and level
+                            </label>
+                            <div className="relative flex flex-wrap rounded-xl gap-3 ">
+                                <div className="relative w-full md:flex-1">
+                                <input
+                                    id="teacher"
+                                    name="gradename"
+                                    type="text"
+                                    placeholder="Ex. Grade 1"
+                                    className="peer flex w-full md:flex-1 rounded-md border border-gray-200 py-2 pl-5 text-sm outline-2 placeholder:text-gray-500"
+                                    defaultValue={gradelevels.gradename}
+                                />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    {/* Buttons */}
+                    <div className="mt-6 flex justify-end gap-4">
+                        <Link
+                        href="/admin/gradelevel"
+                        className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+                        >
+                        Cancel
+                        </Link>
+                        <Button type="submit">Edit Grade Level</Button>
+                    </div>
+                    </div>
+                </form>
+        </>
     )
 }
