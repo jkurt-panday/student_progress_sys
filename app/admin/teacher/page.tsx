@@ -24,8 +24,10 @@ export default async function Page(props: {
   const currentPage = Number(searchParams?.page) || 1; // added in chapter 11
   // const totalPages = await fetchInvoicesPages(query);     // returns the total number of pages based on the search query
 
+// TODO the pagination for this component
+
   return (
-    <main className="border">
+    <main >
       <h1 className="text-3xl font-bold ml-4 mb-4 bg-linear-to-r from-hex-blue via-[#398efd] to-[#ffdca8] bg-clip-text text-transparent">
         Teacher
       </h1>
