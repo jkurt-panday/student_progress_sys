@@ -95,7 +95,7 @@ export async function fetchFilteredTeachers(
             teachers.lastname ILIKE ${`%${query}%`} OR
             teachers.email ILIKE ${`%${query}%`} OR
             teachers.specialization ILIKE ${`%${query}%`}
-        ORDER BY teachers.firstname DESC
+        ORDER BY teachers.firstname ASC
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
         `;
 
