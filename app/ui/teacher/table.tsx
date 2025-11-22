@@ -2,7 +2,7 @@
 import { fetchFilteredTeachers,
          fetchGradeLevels
  } from "@/app/lib/data";
-import { UpdateTeacher, DeleteTeacher } from "../button";
+import { UpdateTeacher, DeleteTeacher, UpdateGradelevel, DeleteGradelevel} from "../button";
 
 export default async function TeacherTable({
     query, currentPage,
@@ -131,6 +131,7 @@ export default async function TeacherTable({
     )
 }
 
+// TODO create the skeleton for the grade level
 
 export async function GradeLevelTable() {
     const gradelevels = await fetchGradeLevels()
@@ -173,8 +174,8 @@ export async function GradeLevelTable() {
                                             {/* <p>{formatDateToLocal(teacher.date)}</p> */}
                                         </div>
                                         <div className="flex justify-end gap-2">
-                                            <UpdateTeacher id={gradelvl.gradeid} />
-                                            <DeleteTeacher id={gradelvl.gradeid} />
+                                            <UpdateGradelevel id={gradelvl.gradeid} />
+                                            <DeleteGradelevel id={gradelvl.gradeid} />
                                         </div>
                                         </div>
                                     </div>
@@ -192,15 +193,6 @@ export async function GradeLevelTable() {
                                 <th scope="col" className="px-3 py-5 font-bold">
                                 Assigned Teacher
                                 </th>
-                                {/* <th scope="col" className="px-3 py-5 font-bold">
-                                Last Name
-                                </th>
-                                <th scope="col" className="px-3 py-5 font-bold">
-                                Email
-                                </th>
-                                <th scope="col" className="px-3 py-5 font-bold">
-                                Specialization
-                                </th> */}
                                 <th scope="col" className="relative py-3 pl-6 pr-3">
                                 <span className="sr-only">Edit</span>
                                 </th>
@@ -227,19 +219,10 @@ export async function GradeLevelTable() {
                                 <td className="whitespace-nowrap px-3 py-3">
                                     {gradelvl.firstname} {gradelvl.middlename} {gradelvl.lastname}
                                 </td>
-                                {/* <td className="whitespace-nowrap px-3 py-3">
-                                    {gradelvl.middlename}
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-3">
-                                    {gradelvl.lastname}
-                                </td> */}
-                                {/* <td className="whitespace-nowrap px-3 py-3">
-                                    {gradelvl.specialization}
-                                </td> */}
                                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                     <div className="flex justify-end gap-3">
-                                    <UpdateTeacher id={gradelvl.gradeid} />
-                                    <DeleteTeacher id={gradelvl.gradeid} />
+                                    <UpdateGradelevel id={gradelvl.gradeid} />
+                                    <DeleteGradelevel id={gradelvl.gradeid} />
                                     </div>
                                 </td>
                                 </tr>
