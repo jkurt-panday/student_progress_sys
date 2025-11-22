@@ -138,3 +138,41 @@ export async function createGradeLevel(formData: FormData) {
 
     // TODO the edit button and the delete button for the gradelevel
 }
+
+const UpdateGradeLevel = GradelevelSchema.omit({ gradeid: true })
+
+export async function updateGradeLevel(id: string, formData: FormData) {
+    const { 
+            gradename,
+            assignedteacher
+        } = UpdateGradeLevel.parse({
+            gradename: formData.get('gradename'),
+            assignedteacher: formData.get('assignedteacher')
+        })
+
+    try {
+        await sql`
+            UPDATE gradelevels
+            SET gradename = ${gradename},
+                assignedteacher = ${assignedteacher}
+            WHERE gradeid = ${id}
+        `;
+    } catch (error) {
+        console.log(error)
+        throw new Error("Database Failure: Failed to update gradelevel.")
+    }
+
+    revalidatePath('/admin/gradelevel')
+    redirect('/admin/gradelevel')
+}
+
+export async function deleteGradeLevel(id: string) {
+    try {
+        await sql`DELETE FROM gradelevels WHERE gradeid = ${id}`;
+    } catch (error) {
+        console.log(error)
+        throw new Error('Failed to delete Grade Level')
+    }
+
+    revalidatePath('/admin/gradelevel')
+}
