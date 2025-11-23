@@ -4,6 +4,8 @@ import { CreateTeacher } from "@/app/ui/teacher/buttons";
 import { Suspense } from "react";
 import { TeacherTableSkeleton } from "@/app/ui/skeletons";
 import TeacherTable from "@/app/ui/teacher/table";
+import Pagination from "@/app/ui/pagination";
+import { fetchTeacherPages } from "@/app/lib/data";
 
 export const metadata: Metadata = {
   title: "Teachers",
@@ -22,7 +24,7 @@ export default async function Page(props: {
   const query = searchParams?.query || ""; // ?.   = is optional chaining, might be null
   // extracts the value associated with the 'page' key
   const currentPage = Number(searchParams?.page) || 1; // added in chapter 11
-  // const totalPages = await fetchInvoicesPages(query);     // returns the total number of pages based on the search query
+  const totalPages = await fetchTeacherPages(query);     // returns the total number of pages based on the search query
 
 // TODO the pagination for this component
 
@@ -47,7 +49,7 @@ export default async function Page(props: {
           <TeacherTable query={query} currentPage={currentPage} />
         </Suspense>
         <div className="mt-5 flex w-full justify-center">
-          {/* <Pagination totalPages={totalPages} /> */}
+          <Pagination totalPages={totalPages} />
         </div>
       </div>
     </main>
