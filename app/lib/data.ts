@@ -67,7 +67,7 @@ export async function fetchTeacherById(id: string) {
 
         return data[0];
     } catch (error) {
-        console.log(error)
+        console.error("Database Error:", error);
         throw new Error('Database Failure: faild to fetch teacher by ID')
     }
 }
@@ -106,6 +106,28 @@ export async function fetchFilteredTeachers(
     }
 }
 
+// ! fetch teacher by pages
+export async function fetchTeacherPages(query: string) {
+    try {
+        const data = await sql`
+        SELECT COUNT(*)
+        FROM teachers
+        WHERE 
+            teachers.firstname ILIKE ${`%${query}%`} OR
+            teachers.middlename ILIKE ${`%${query}%`} OR
+            teachers.lastname ILIKE ${`%${query}%`} OR
+            teachers.email ILIKE ${`%${query}%`} OR
+            teachers.specialization ILIKE ${`%${query}%`}
+        `;
+
+        const totalPages = Math.ceil(Number(data[0].count) / ITEMS_PER_PAGE);
+        return totalPages;
+    } catch (error) {
+        console.log("Database error: ", error)
+        throw new Error("Failed to fetch total pages of teacher")
+    }
+}
+
 
 // ! fetching gradelevels
 
@@ -126,7 +148,7 @@ export async function fetchGradeLevels() {
         return gradelevels;
         
     } catch (error) {
-        console.log(error)
+        console.error("Database Error:", error);
         throw new Error('Database Failure: Failed to fetch Grade Levels')
     }
 }
@@ -145,7 +167,7 @@ export async function fetchGradelevelById(id: string) {
         return data[0];
 
     } catch (error) {
-        console.log(error)
+        console.error("Database Error:", error);
         throw new Error("Database Failure: failed to fetch gradelevel by id")
     }
 }
