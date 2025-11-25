@@ -9,18 +9,26 @@ export async function fetchCardData() {
     try {
         const teachersCountPromise = sql`SELECT COUNT(*) FROM teachers`;
         const gradelevelCountPromise = sql`SELECT COUNT(*) FROM gradelevels`;
+        const studentCountPromise = sql`SELECT COUNT(*) FROM students`;
         
         const data = await Promise.all([
             teachersCountPromise,
-            gradelevelCountPromise
-        ]);      // TODO add the count for students
+            gradelevelCountPromise,
+            studentCountPromise
+        ]);
+
+        // console.log(data)
 
         const numberofTeachers = Number(data[0][0].count ?? "0")
         const numberofGradelevels = Number(data[1][0].count ?? "0")
+        const numberofStudents = Number(data[2][0].count ?? "0")
+
+        // console.log(numberofTeachers, numberofGradelevels, numberofStudents)
 
     return {
         numberofTeachers,
-        numberofGradelevels
+        numberofGradelevels,
+        numberofStudents
     }
 
     } catch (error) {
