@@ -11,7 +11,7 @@ export default async function TeacherTable({
 }) {
     const teachers = await fetchFilteredTeachers(query, currentPage);
 
-    // TODO the grade level CRUD
+    
 
     return (
         <>
@@ -131,7 +131,7 @@ export default async function TeacherTable({
     )
 }
 
-// TODO create the skeleton for the grade level
+
 
 export async function GradeLevelTable() {
     const gradelevels = await fetchGradeLevels()
