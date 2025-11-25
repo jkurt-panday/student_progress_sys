@@ -26,7 +26,7 @@ export default async function Page(props: {
   const currentPage = Number(searchParams?.page) || 1; // added in chapter 11
   const totalPages = await fetchTeacherPages(query);     // returns the total number of pages based on the search query
 
-// TODO the pagination for this component
+// TODO check if pagination truly works
 
   return (
     <main >
