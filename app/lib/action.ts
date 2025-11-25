@@ -136,7 +136,7 @@ export async function createGradeLevel(formData: FormData) {
     revalidatePath('/admin/gradelevel')
     redirect('/admin/gradelevel')
 
-    // TODO the edit button and the delete button for the gradelevel
+
 }
 
 const UpdateGradeLevel = GradelevelSchema.omit({ gradeid: true })
