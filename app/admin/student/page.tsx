@@ -4,7 +4,8 @@ import { CreateStudent } from "@/app/ui/teacher/buttons";
 import { Suspense } from "react";
 import { StudentTableSkeleton } from "@/app/ui/skeletons";
 import Pagination from "@/app/ui/pagination";
-import { fetchTeacherPages } from "@/app/lib/data";
+import { fetchStudentPages } from "@/app/lib/data";
+import { StudentTable } from "@/app/ui/teacher/table";
 
 export const metadata: Metadata = {
   title: "Students",
@@ -17,14 +18,12 @@ export default async function Page(props: {
   }>;
 }) {
 
-    // todo create pagination
-
     const searchParams = await props.searchParams;
       // extracts the value associated with the 'query' key from the 'searchParam' object
       const query = searchParams?.query || ""; // ?.   = is optional chaining, might be null
       // extracts the value associated with the 'page' key
       const currentPage = Number(searchParams?.page) || 1; // added in chapter 11
-      const totalPages = await fetchTeacherPages(query);     // returns the total number of pages based on the search query
+      const totalPages = await fetchStudentPages(query);     // returns the total number of pages based on the search query
 
     return (
         <>
@@ -40,8 +39,7 @@ export default async function Page(props: {
                     <CreateStudent />
                 </div>
                 <Suspense key={query + currentPage} fallback={<StudentTableSkeleton />}>
-                    {/* // table that contains the invoices together with the customer  */}
-                    {/* <TeacherTable query={query} currentPage={currentPage} /> */}
+                    <StudentTable query={query} currentPage={currentPage} />
                 </Suspense>
                 <div className="mt-5 flex w-full justify-center">
                     <Pagination totalPages={totalPages} />
