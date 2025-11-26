@@ -1,7 +1,7 @@
 // ! this is for fetching data, for data mutation refer to action.ts
 
 import postgres from "postgres";
-import { Teacher, TeacherForm, GradeLevel } from "./definitions";
+import { Teacher, TeacherForm, GradeLevel, Student } from "./definitions";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -131,7 +131,7 @@ export async function fetchTeacherPages(query: string) {
         const totalPages = Math.ceil(Number(data[0].count) / ITEMS_PER_PAGE);
         return totalPages;
     } catch (error) {
-        console.log("Database error: ", error)
+        console.error("Database error: ", error)
         throw new Error("Failed to fetch total pages of teacher")
     }
 }
@@ -177,5 +177,83 @@ export async function fetchGradelevelById(id: string) {
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Database Failure: failed to fetch gradelevel by id")
+    }
+}
+
+// ! fetching students
+
+export async function fetchFilteredStudents (
+    query: string, currentPage: number
+) {
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+    try {
+        const students = await sql<Student[]>`
+        SELECT
+            students.studentid,
+            students.studentnum,
+            students.lrn,
+            students.firstname,
+            students.middlename,
+            students.lastname,
+            students.sex,
+            gradelevels.gradename,
+            students.age,
+            students.dateofbirth,
+            students.guardianname,
+            students.guardiancontact
+        FROM students
+        JOIN gradelevels ON students.gradelevel = gradelevels.gradeid
+        WHERE 
+            students.studentnum::text   ILIKE ${`%${query}%`} OR
+            students.lrn::text          ILIKE ${`%${query}%`} OR
+            students.firstname          ILIKE ${`%${query}%`} OR
+            students.middlename         ILIKE ${`%${query}%`} OR
+            students.lastname           ILIKE ${`%${query}%`} OR
+            LOWER(students.sex) = LOWER(${query}) OR
+            gradelevels.gradename::text ILIKE ${`%${query}%`} OR
+            students.age::text          ILIKE ${`%${query}%`} OR
+            students.dateofbirth::text  ILIKE ${`%${query}%`} OR
+            students.guardianname       ILIKE ${`%${query}%`} OR
+            students.guardiancontact    ILIKE ${`%${query}%`}
+        ORDER BY students.firstname ASC
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+        `;
+
+        // console.log(students)
+
+        return students;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch students (with query)")
+    }
+}
+
+// ! fetch teacher by pages
+export async function fetchStudentPages(query: string) {
+    try {
+        const data = await sql`
+        SELECT COUNT(*)
+        FROM students
+        JOIN gradelevels ON students.gradelevel = gradelevels.gradeid
+        WHERE 
+            students.studentnum::text   ILIKE ${`%${query}%`} OR
+            students.lrn::text          ILIKE ${`%${query}%`} OR
+            students.firstname          ILIKE ${`%${query}%`} OR
+            students.middlename         ILIKE ${`%${query}%`} OR
+            students.lastname           ILIKE ${`%${query}%`} OR
+            LOWER(students.sex) = LOWER(${query}) OR
+            gradelevels.gradename::text ILIKE ${`%${query}%`} OR
+            students.age::text          ILIKE ${`%${query}%`} OR
+            students.dateofbirth::text  ILIKE ${`%${query}%`} OR
+            students.guardianname       ILIKE ${`%${query}%`} OR
+            students.guardiancontact    ILIKE ${`%${query}%`}
+        `;
+
+        const totalPages = Math.ceil(Number(data[0].count) / ITEMS_PER_PAGE);
+        return totalPages;
+    } catch (error) {
+        console.error("Database error: ", error)
+        throw new Error("Failed to fetch total pages of students")
     }
 }
