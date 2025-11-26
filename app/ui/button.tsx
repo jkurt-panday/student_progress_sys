@@ -73,3 +73,30 @@ export function DeleteGradelevel({ id }: { id: string }) {
     </>
   );
 }
+
+// TODO change some of the code
+export function UpdateStudent({ id }: { id: string}) {
+  return (
+    <Link 
+      href={`/admin/student/${id}/edit`}
+      className='rounded-md border p-2 hover:bg-gray-100'
+    >
+      <PencilIcon className='w-5' />
+    </Link>
+  )
+}
+
+export function DeleteStudent({ id }: { id: string }) {
+  const deleteTeacherWithId = deleteTeacher.bind(null, id);
+
+  return (
+    <>
+      <form action={deleteTeacherWithId}>
+        <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
+          <span className="sr-only">Delete</span>
+          <TrashIcon className="w-5" />
+        </button>
+      </form>
+    </>
+  );
+}
