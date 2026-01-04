@@ -176,3 +176,85 @@ export async function deleteGradeLevel(id: string) {
 
     revalidatePath('/admin/gradelevel')
 }
+
+const StudentSchema = z.object({
+    studentid: z.string(),
+    studentnum: z.coerce.number(),
+    lrn: z.coerce.number(),
+    firstname: z.string(),
+    middlename: z.string().nullable(),
+    lastname: z.string(),
+    sex: z.string(),
+    gradename: z.string(),
+    age: z.coerce.number(),
+    dateofbirth: z.string(),
+    guardianname: z.string(),
+    guardiancontact: z.string(),
+  });
+  
+  const CreateStudent = StudentSchema.omit({ studentid: true });
+  
+  export async function createStudent(formData: FormData) {
+    const {
+      studentnum,
+      lrn,
+      firstname,
+      middlename,
+      lastname,
+      sex,
+      gradename,
+      age,
+      dateofbirth,
+      guardianname,
+      guardiancontact,
+    } = CreateStudent.parse({
+      studentnum: formData.get("studentnum"),
+      lrn: formData.get("lrn"),
+      firstname: formData.get("firstname"),
+      middlename: formData.get("middlename"),
+      lastname: formData.get("lastname"),
+      sex: formData.get("sex"),
+      gradename: formData.get("gradename"),
+      age: formData.get("age"),
+      dateofbirth: formData.get("dateofbirth"),
+      guardianname: formData.get("guardianname"),
+      guardiancontact: formData.get("guardiancontact"),
+    });
+  
+    try {
+      await sql`
+        INSERT INTO students (
+          studentnum,
+          lrn,
+          firstname,
+          middlename,
+          lastname,
+          sex,
+          gradename,
+          age,
+          dateofbirth,
+          guardianname,
+          guardiancontact
+        )
+        VALUES (
+          ${studentnum},
+          ${lrn},
+          ${firstname},
+          ${middlename},
+          ${lastname},
+          ${sex},
+          ${gradename},
+          ${age},
+          ${dateofbirth},
+          ${guardianname},
+          ${guardiancontact}
+        )
+      `;
+    } catch (error) {
+      console.log(error);
+      throw new Error("Database Error: Failed to create student.");
+    }
+  
+    revalidatePath("/admin/student");
+    redirect("/admin/student");
+  }
